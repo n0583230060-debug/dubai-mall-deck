@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import CountUp from "../components/CountUp";
 
 const f = (delay) => ({
   initial: { opacity: 0, y: 28 },
@@ -16,10 +17,10 @@ const IMAGES = {
 // ─────────────────────────────────────────────────────────────────────────────────────
 
 const CARDS = [
-  { img: IMAGES.global,  stat: "2B",     label: "People Reachable",       sub: "Within a 4-Hour Flight" },
-  { img: IMAGES.crowd,   stat: "70%",    label: "International Visitors",  sub: "From 190+ Countries" },
-  { img: IMAGES.fashion, stat: "200+",   label: "Luxury Brands",          sub: "At Fashion Avenue" },
-  { img: IMAGES.attract, stat: "4hr+",   label: "Average Dwell Time",     sub: "Unmatched Brand Exposure" },
+  { img: IMAGES.global,  stat: <CountUp end={2}   suffix="B"  />, label: "People Reachable",      sub: "Within a 4-Hour Flight" },
+  { img: IMAGES.crowd,   stat: <CountUp end={70}  suffix="%" />,  label: "International Visitors", sub: "From 190+ Countries" },
+  { img: IMAGES.fashion, stat: <CountUp end={200} suffix="+" />,  label: "Luxury Brands",         sub: "At Fashion Avenue" },
+  { img: IMAGES.attract, stat: "4hr+",                            label: "Average Dwell Time",    sub: "Unmatched Brand Exposure" },
 ];
 
 const SOURCE_MARKETS = [
@@ -57,7 +58,7 @@ export default function WhyUs({ onNavigate }) {
         </div>
         <div className="why-hero-stat">
           <div className="whs-eyebrow">Annual Visitors</div>
-          <div className="whs-number">105<span>M+</span></div>
+          <div className="whs-number"><CountUp end={105} /><span>M+</span></div>
           <div className="whs-rule" />
           <p className="whs-body">
             More visitors than the Eiffel Tower, Times Square, and Disney World — combined.

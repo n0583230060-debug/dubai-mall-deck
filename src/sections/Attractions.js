@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import CountUp from "../components/CountUp";
 
 const f = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -62,10 +63,10 @@ const ATTRACTIONS = [
 ];
 
 const ENGAGEMENT = [
-  { stat: '4hr+',  label: 'Average Dwell Time'    },
-  { stat: '68%',   label: 'Repeat Visitor Rate'   },
-  { stat: '105M+', label: 'Annual Footfall'        },
-  { stat: '70%',   label: 'International Visitors' },
+  { stat: '4hr+',                             label: 'Average Dwell Time'    },
+  { stat: <CountUp end={68}  suffix="%" />,   label: 'Repeat Visitor Rate'   },
+  { stat: <CountUp end={105} suffix="M+" />,  label: 'Annual Footfall'       },
+  { stat: <CountUp end={70}  suffix="%" />,   label: 'International Visitors'},
 ];
 
 export default function Attractions({ onNavigate }) {

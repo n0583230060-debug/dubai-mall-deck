@@ -13,24 +13,26 @@ import AIChat from "./components/AIChat";
 import "./styles.css";
 
 const SECTIONS = [
-  { id: "hero",     label: "Home" },
-  { id: "why",      label: "Why Dubai Mall" },
-  { id: "fashion",  label: "Fashion Avenue" },
+  { id: "hero",        label: "Home" },
+  { id: "why",         label: "Why Dubai Mall" },
+  { id: "fashion",     label: "Fashion Avenue" },
   { id: "attractions", label: "Attractions" },
-  { id: "events",   label: "Events" },
+  { id: "events",      label: "Events" },
   { id: "sponsorship", label: "Sponsorship" },
-  { id: "leasing",  label: "Leasing" },
-  { id: "contact",  label: "Contact" },
+  { id: "leasing",     label: "Leasing" },
+  { id: "contact",     label: "Contact" },
 ];
 
 export default function App() {
-  const [active, setActive] = useState("hero");
+  const [active, setActive]     = useState("hero");
   const [chatOpen, setChatOpen] = useState(false);
 
-  const idx = SECTIONS.findIndex((s) => s.id === active);
+  const idx  = SECTIONS.findIndex((s) => s.id === active);
   const next = SECTIONS[idx + 1];
   const prev = SECTIONS[idx - 1];
+  const progress = (idx / (SECTIONS.length - 1)) * 100;
 
+  // Keyboard navigation
   useEffect(() => {
     const fn = (e) => {
       if (e.key === "ArrowRight" && next) setActive(next.id);
@@ -38,25 +40,29 @@ export default function App() {
     };
     window.addEventListener("keydown", fn);
     return () => window.removeEventListener("keydown", fn);
-  }, [active]);
+  }, [active, next, prev]);
 
   const renderSection = () => {
     const go = setActive;
     switch (active) {
-      case "hero":        return <Hero        onNavigate={go} />;
-      case "why":         return <WhyUs       onNavigate={go} />;
+      case "hero":        return <Hero          onNavigate={go} />;
+      case "why":         return <WhyUs         onNavigate={go} />;
       case "fashion":     return <FashionAvenue onNavigate={go} />;
-      case "attractions": return <Attractions onNavigate={go} />;
-      case "events":      return <Events      onNavigate={go} />;
-      case "sponsorship": return <Sponsorship onNavigate={go} />;
-      case "leasing":     return <Leasing     onNavigate={go} />;
-      case "contact":     return <Contact />;
-      default:            return <Hero        onNavigate={go} />;
+      case "attractions": return <Attractions   onNavigate={go} />;
+      case "events":      return <Events        onNavigate={go} />;
+      case "sponsorship": return <Sponsorship   onNavigate={go} />;
+      case "leasing":     return <Leasing       onNavigate={go} />;
+      case "contact":     return <Contact onNavigate={go} />;
+      default:            return <Hero          onNavigate={go} />;
     }
   };
 
   return (
     <div className="app">
+
+      {/* Progress bar */}
+      <div className="progress-bar" style={{ width: `${progress}%` }} />
+
       <Nav sections={SECTIONS} active={active} onNavigate={setActive} />
 
       <AnimatePresence mode="wait">
@@ -100,7 +106,7 @@ export default function App() {
       </nav>
 
       {/* AI Chat */}
-      <button className="chat-trigger" onClick={() => setChatOpen(true)}>
+      <button className="chat-trigger" onClick={() => setChatOpen(true)} aria-label="Open concierge chat">
         <span className="chat-trigger-icon">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"

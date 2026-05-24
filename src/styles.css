@@ -446,6 +446,116 @@ nav.main-nav {
 }
 .chat-send:hover { background: var(--gold-light); }
 
+/* ── PROGRESS BAR ── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #8B5CF6, #A78BFA);
+  z-index: 300;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 8px rgba(139,92,246,0.6);
+}
+
+/* ── KEYBOARD HINT ── */
+.keyboard-hint {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15,23,42,0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(139,92,246,0.25);
+  border-radius: 100px;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(248,250,252,0.55);
+  z-index: 150;
+  pointer-events: none;
+}
+.keyboard-hint-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  background: rgba(248,250,252,0.1);
+  border: 1px solid rgba(248,250,252,0.2);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: rgba(248,250,252,0.7);
+}
+
+/* ── HAMBURGER ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 200;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: #0F172A;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── MOBILE DROPDOWN MENU ── */
+.nav-mobile-menu {
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(248,250,252,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(139,92,246,0.15);
+  z-index: 180;
+  padding: 12px 0 16px;
+  box-shadow: 0 8px 32px rgba(15,23,42,0.1);
+}
+.nav-mobile-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 12px 28px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #475569;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+.nav-mobile-item:hover,
+.nav-mobile-item.active {
+  color: #8B5CF6;
+  background: rgba(139,92,246,0.05);
+}
+.nav-mobile-num {
+  font-size: 0.5rem;
+  color: rgba(139,92,246,0.5);
+  font-weight: 400;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .section { padding: 100px 40px 90px; }
@@ -453,9 +563,50 @@ nav.main-nav {
   .nav-links { gap: 20px; }
   .section-nav { padding: 0 32px; }
 }
+
 @media (max-width: 768px) {
+  /* Nav */
   .nav-links { display: none; }
-  .section { padding: 90px 24px 110px; }
-  .chat-overlay { padding: 0; }
-  .chat-box { width: 100%; height: 72vh; }
+  .nav-hamburger { display: flex; }
+  nav.main-nav { padding: 14px 20px; }
+
+  /* Sections */
+  .section { padding: 80px 20px 100px; }
+
+  /* Hide nav arrows — dots are enough */
+  .section-nav { display: none; }
+
+  /* Bigger dots for touch */
+  .section-dots {
+    right: 10px;
+    gap: 6px;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    padding: 7px;
+    box-sizing: content-box;
+  }
+
+  /* Chat button — circle only on mobile */
+  .chat-trigger {
+    right: 16px;
+    bottom: 20px;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+  }
+  .chat-trigger:hover { transform: translateY(-3px); }
+  .chat-trigger-text,
+  .chat-trigger-arrow { display: none; }
+  .chat-trigger-icon { width: 40px; height: 40px; }
+
+  /* Keyboard hint — hide on mobile */
+  .keyboard-hint { display: none; }
+
+  /* Chat modal */
+  .chat-overlay { padding: 0; align-items: flex-end; }
+  .chat-box { width: 100%; height: 72vh; border-radius: 16px 16px 0 0; }
 }
