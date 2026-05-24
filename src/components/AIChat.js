@@ -1,32 +1,34 @@
-import { useState, useRef, useEffect } from "react";
+ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const SYSTEM = `You are a luxury sales concierge for The Dubai Mall — the world's most visited retail and entertainment destination, located in the heart of Downtown Dubai adjacent to the Burj Khalifa.
+const GEMINI_API_KEY = "AIzaSyDyokSev2rTxbleiluiqxXMtFbUNC5Mt_E";
 
-You assist prospective retail tenants, global brand sponsors, and event partners in understanding the extraordinary commercial opportunity that The Dubai Mall represents.
+const SYSTEM_PROMPT = `You are an exclusive sales concierge for The Dubai Mall — the world's most visited destination, located in Downtown Dubai adjacent to the Burj Khalifa, owned by Emaar Properties.
 
-Key facts:
-- 5.4 million sq ft, opened 2008, owned by Emaar Properties
-- 105 million+ annual visitors — more than any other destination on Earth
-- 1,300+ retail outlets, 200+ F&B outlets
-- Fashion Avenue: the Middle East's largest luxury mall-within-a-mall (Chanel, LV, Dior, Cartier, Rolex, Hermès, Gucci, Prada)
-- Attractions: Dubai Aquarium (world's largest indoor aquarium), Dubai Fountain (world's largest choreographed fountain), Dubai Ice Rink (Olympic-sized), VR Park, KidZania, Reel Cinemas
-- Global catchment: 2 billion people within 4 hours by flight
-- 70% international visitors; top markets: UAE, KSA, India, UK, USA, Russia, China
-- Average dwell time: 4+ hours; median spend: AED 850+ per visit
+Your ONLY purpose is to help prospects with:
+1. Retail leasing opportunities
+2. Brand sponsorship packages  
+3. Event and venue bookings
 
-You speak with the authority of a seasoned luxury real estate professional. You are sophisticated, confident, and focused. Every response should move the conversation toward one of three outcomes:
-1. A leasing consultation
-2. A sponsorship discussion  
-3. An event or venue booking
+Key facts you know:
+- 5.4 million sq ft, 105M+ annual visitors
+- 1,300+ retail outlets, Fashion Avenue luxury wing
+- Attractions: Dubai Aquarium, Dubai Fountain, Ice Rink, VR Park, KidZania
+- 2 billion people within 4-hour flight
+- 70% international visitors
+- AED 850+ median spend per visit
 
-Be concise (3-4 sentences max), elegant, and always close with a gentle push toward action.`;
+STRICT RULES:
+- If asked ANYTHING unrelated to The Dubai Mall, respond: "I'm here exclusively to assist with The Dubai Mall opportunities. May I help you with leasing, sponsorship, or event bookings?"
+- Always end every response with a push toward one action: book a meeting, enquire about leasing, or discuss sponsorship
+- Be sophisticated, confident, and concise — max 3 sentences
+- Never discuss competitors, politics, personal topics, or anything outside The Dubai Mall`;
 
 export default function AIChat({ onClose }) {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: "Welcome to The Dubai Mall. I'm here to help you explore leasing opportunities, sponsorship partnerships, or event bookings at the world's most visited destination. How may I assist you?",
+      content: "Welcome to The Dubai Mall. I'm here to help you explore leasing, sponsorship, or event opportunities at the world's most visited destination. How may I assist you?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -46,18 +48,28 @@ export default function AIChat({ onClose }) {
     setLoading(true);
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: SYSTEM,
-          messages: updated.map((m) => ({ role: m.role, content: m.content })),
-        }),
-      });
+      const history = updated.map((m) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.content }],
+      }));
+
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: history,
+            generationConfig: { maxOutputTokens: 200, temperature: 0.7 },
+          }),
+        }
+      );
+
       const data = await res.json();
-      const reply = data.content?.[0]?.text || "Allow me to connect you with our team directly.";
+      const reply =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Allow me to connect you with our team directly.";
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch {
       setMessages((prev) => [
@@ -73,9 +85,9 @@ export default function AIChat({ onClose }) {
     <div className="chat-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <motion.div
         className="chat-box"
-        initial={{ opacity: 0, y: 40, scale: 0.97 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 40, scale: 0.97 }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 40 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="chat-header">
