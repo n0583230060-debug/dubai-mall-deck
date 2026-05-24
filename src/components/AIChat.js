@@ -1,7 +1,7 @@
  import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const GEMINI_API_KEY = "AIzaSyDyokSev2rTxbleiluiqxXMtFbUNC5Mt_E";
+const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_KEY;
 
 const SYSTEM_PROMPT = `You are an exclusive sales concierge for The Dubai Mall — the world's most visited destination, located in Downtown Dubai adjacent to the Burj Khalifa, owned by Emaar Properties.
 
