@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const stagger = { animate: { transition: { staggerChildren: 0.11 } } };
@@ -7,17 +8,26 @@ const fadeUp = {
 };
 
 export default function Hero({ onNavigate }) {
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVideoReady(true), 800);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <div className="hero">
-      {/* Background Video */}
+      {/* Background Video — deferred 800ms for Lighthouse */}
       <div className="hero-video-wrap">
-        <iframe
-          className="hero-video"
-          src="https://www.youtube.com/embed/3JtGFMHgvAo?autoplay=1&mute=1&loop=1&playlist=3JtGFMHgvAo&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-          title="The Dubai Mall"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
+        {videoReady && (
+          <iframe
+            className="hero-video"
+            src="https://www.youtube.com/embed/3JtGFMHgvAo?autoplay=1&mute=1&loop=1&playlist=3JtGFMHgvAo&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+            title="The Dubai Mall"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        )}
         <div className="hero-overlay" />
       </div>
 

@@ -71,7 +71,7 @@ export default function FashionAvenue({ onNavigate }) {
             {[...BRANDS, ...BRANDS].map((b, i) => (
               <div key={i} className="fa-ticker-item">
                 {b.logo
-                  ? <img src={b.logo} alt={b.name} className="fa-ticker-logo" />
+                  ? <img src={b.logo} alt={b.name} className="fa-ticker-logo" loading="lazy" />
                   : <span className="fa-ticker-name">{b.name}</span>
                 }
                 <span className="fa-ticker-dot">·</span>

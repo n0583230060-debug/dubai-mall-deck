@@ -7,12 +7,12 @@ const f = (delay = 0) => ({
 
 // ── CHANGE IMAGE FILENAMES HERE — one line per attraction ──
 const IMAGES = {
-  aquarium: '/assets/aquarium.jpg',
-  fountain: '/assets/fountain.jpg',
-  icerink:  '/assets/icerink.jpg',
-  vr:       '/assets/vr.jpg',
-  kidzania: '/assets/kidzania.jpg',
-  cinema:   '/assets/cinema.jpg',
+  aquarium: '/assets/aquarium.webp',
+  fountain: '/assets/fountain.webp',
+  icerink:  '/assets/icerink.webp',
+  vr:       '/assets/vr.webp',
+  kidzania: '/assets/kidzania.webp',
+  cinema:   '/assets/cinema.webp',
 };
 // ──────────────────────────────────────────────────────────
 

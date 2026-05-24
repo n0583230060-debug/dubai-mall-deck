@@ -73,30 +73,31 @@ export default function App() {
       </AnimatePresence>
 
       {/* Arrows */}
-      <div className="section-nav">
+      <nav className="section-nav" aria-label="Section navigation">
         {prev && (
-          <button className="nav-arrow left" onClick={() => setActive(prev.id)}>
+          <button className="nav-arrow left" onClick={() => setActive(prev.id)} aria-label={`Previous: ${prev.label}`}>
             ← {prev.label}
           </button>
         )}
         {next && (
-          <button className="nav-arrow right" onClick={() => setActive(next.id)}>
+          <button className="nav-arrow right" onClick={() => setActive(next.id)} aria-label={`Next: ${next.label}`}>
             {next.label} →
           </button>
         )}
-      </div>
+      </nav>
 
       {/* Dots */}
-      <div className="section-dots">
+      <nav className="section-dots" aria-label="Jump to section">
         {SECTIONS.map((s) => (
           <button
             key={s.id}
             className={`dot ${active === s.id ? "active" : ""}`}
             onClick={() => setActive(s.id)}
-            title={s.label}
+            aria-label={`Go to ${s.label}`}
+            aria-current={active === s.id ? "page" : undefined}
           />
         ))}
-      </div>
+      </nav>
 
       {/* AI Chat */}
       <button className="chat-trigger" onClick={() => setChatOpen(true)}>
