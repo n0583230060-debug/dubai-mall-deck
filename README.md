@@ -1,76 +1,138 @@
 # The Dubai Mall — Interactive Sales Deck
 
-A cinematic, luxury-grade interactive sales deck for **The Dubai Mall** — the world's most visited retail and entertainment destination, adjacent to the Burj Khalifa in Downtown Dubai.
+> A cinematic, browser-based sales experience for the world's most visited destination.
 
-## 🔗 Live Demo
-> Deploy to Vercel and add link here
+ **Live Demo:** [dubai-mall-deck-eight.vercel.app](https://dubai-mall-deck-eight.vercel.app)
 
-## Tech Stack
-- **React 18** — UI framework
-- **Framer Motion** — cinematic transitions and animations
-- **Anthropic Claude API** — AI-powered luxury sales concierge
-- **Vercel** — zero-config deployment
+---
+
+## About This Project
+
+This is an interactive sales deck built for **The Dubai Mall** — the world's most visited retail and entertainment destination, located in Downtown Dubai adjacent to the Burj Khalifa.
+
+The tool replaces the traditional sales process (PDFs, YouTube links, spreadsheets) with a single, self-contained experience that a sales rep can screen-share on a live call — or send as a standalone link that a prospect can explore on their own.
+
+**Primary audiences:**
+- Retail tenants (luxury flagships, fashion brands, F&B concepts, pop-ups)
+- Brand sponsors and partnership teams
+- Event producers and venue bookers
+
+---
 
 ## Features
-- Non-linear navigation (dots, arrows, keyboard ← →)
-- Cinematic YouTube video hero
-- AI concierge chat (Claude-powered)
-- 8 fully interactive sections
-- Fashion Avenue dedicated luxury wing module
+
+- Cinematic full-screen video hero
+- Non-linear navigation — the viewer controls their journey
+- AI-powered sales concierge (Claude API) — answers questions and guides toward action
+- Dedicated Fashion Avenue luxury wing module
 - Visitor source market data visualisation
-- Venue capacity grid
 - Sponsorship tier cards
 - Leasing path segmentation
+- Venue capacity grid with event highlights
 - Contact / enquiry form
+- Fully responsive — desktop and tablet
 
-## Project Structure
-```
-src/
-  components/
-    Nav.js            # Global navigation bar
-    AIChat.js         # Claude-powered sales concierge
-  sections/
-    Hero.js           # Cinematic video opening
-    WhyUs.js          # Scale, demographics, source markets
-    FashionAvenue.js  # Luxury wing dedicated module
-    Attractions.js    # 6 world-class attractions
-    Events.js         # Venues, capacities, highlights
-    Sponsorship.js    # 3-tier partnership packages
-    Leasing.js        # 4 leasing paths
-    Contact.js        # Enquiry form
-    AllSections.js    # Shared section components
-  data/
-    mall.js           # Single source of truth — all property data
-  styles.css          # Design system (Playfair Display + Lato, gold/black luxury theme)
-  App.js              # Navigation logic and routing
-```
+---
 
-## Setup
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| UI Framework | React 18 |
+| Animations | Framer Motion |
+| Styling | CSS Variables + Custom Design System |
+| AI Concierge | Anthropic Claude API |
+| Deployment | Vercel |
+
+---
+
+## Getting Started
 
 ```bash
+# Clone the repository
+git clone https://github.com/n0583230060-debug/dubai-mall-deck.git
+
+# Navigate into the project
+cd dubai-mall-deck
+
+# Install dependencies
 npm install
+
+# Run locally
 npm start
 ```
 
-## Deploy to Vercel
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-```bash
-npx vercel
+---
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── Nav.js              # Global navigation
+│   └── AIChat.js           # Claude-powered sales concierge
+├── sections/
+│   ├── Hero.js             # Cinematic video opening
+│   ├── WhyUs.js            # Scale, demographics, source markets
+│   ├── FashionAvenue.js    # Luxury wing dedicated module
+│   ├── Attractions.js      # World-class attractions
+│   ├── Events.js           # Venues, capacities, highlights
+│   ├── Sponsorship.js      # Partnership tiers
+│   ├── Leasing.js          # Leasing paths by category
+│   └── Contact.js          # Enquiry form
+├── data/
+│   └── mall.js             # Single source of truth — all property data
+├── styles.css              # Design system
+└── App.js                  # Navigation logic
 ```
 
-No environment variables required — the Anthropic API key is handled by Vercel's proxy.
+---
 
 ## Design Decisions
 
-- **Playfair Display + Lato** — editorial luxury pairing; avoids generic sans-serif defaults
-- **Deep black (#06060A) + desert gold (#C9A84C)** — evokes Dubai's skyline at night
-- **Grain overlay on hero** — cinematic texture, not flat digital
-- **Vertical eyebrow label** — borrowed from luxury print editorial
-- **Stats ticker bar** — anchors scale data without interrupting the cinematic opening
-- **Fashion Avenue as a standalone module** — the luxury wing deserves its own section given its scale and positioning
-- **Source market bar chart** — visually communicates global reach to prospective partners
-- **AI concierge** — Claude acts as a 24/7 luxury sales representative, always closing toward an action
+**Dark luxury theme** — deep black with clean white typography. No gold, no clutter. The property speaks for itself.
+
+**Video-first hero** — the opening frame is a full-screen cinematic video. The viewer feels the scale before they read a single word.
+
+**Non-linear navigation** — prospects are not forced through a linear slideshow. They control their journey, which increases engagement and time on screen.
+
+**Single data file** — all property content lives in `data/mall.js`. Updating figures, brands, or copy requires changing one file only.
+
+**Fashion Avenue as a standalone section** — at 2.4 million sq ft, the luxury wing is larger than most standalone malls. It deserves its own dedicated section.
+
+**AI concierge** — Claude acts as a 24/7 sales representative. Every response is designed to guide the prospect toward one of three actions: leasing, sponsorship, or event booking.
+
+---
 
 ## AI Tools Used
-- **Claude (Anthropic)** — code generation + AI chat concierge feature
-- **Midjourney** — supplemental imagery (where applicable)
+
+| Tool | How It Was Used |
+|------|----------------|
+| **Claude (Anthropic)** | Code generation, architecture planning, AI chat concierge |
+| **Framer Motion** | Animation design and interaction patterns |
+
+---
+
+## Deployment
+
+Deployed on **Vercel** with zero configuration.
+
+```bash
+npx vercel --prod
+```
+
+---
+
+## What I Would Improve With More Time
+
+- Add entrance screen with audience selector (Tenant / Sponsor / Event Partner) — each path shows a tailored version of the deck
+- Integrate real Dubai Mall API data for live visitor statistics
+- Add scroll-triggered video sections for each attraction
+- Build out a dedicated mobile experience
+- Add analytics to track which sections prospects spend the most time on
+
+---
+
+*Built as part of an interview project. All content sourced from publicly available Dubai Mall and Emaar Properties materials.*
